@@ -1,11 +1,14 @@
 package ru.vvoloshin.testapp.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.Value;
 
 @Value
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@AllArgsConstructor
 public class Address {
+    @NonNull
     private double geoLat;
+    @NonNull
     private double geoLon;
 }

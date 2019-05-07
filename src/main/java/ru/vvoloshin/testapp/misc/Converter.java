@@ -1,6 +1,7 @@
 package ru.vvoloshin.testapp.misc;
 
-public interface Converter<F, T> {
-    T convert(F from);
-}
+import lombok.NonNull;
 
+public interface Converter<F, T> {
+    T convert(@NonNull F from);
+}
