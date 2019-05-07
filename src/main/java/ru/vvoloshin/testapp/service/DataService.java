@@ -11,11 +11,15 @@ import ru.vvoloshin.testapp.dto.response.Address;
 import ru.vvoloshin.testapp.input.http.DataClient;
 import ru.vvoloshin.testapp.misc.AddressConverterImpl;
 
+import javax.validation.constraints.NotNull;
+
 @Slf4j
 @Service
 public class DataService {
+    @NotNull
     @Value("${dadata.api.key}")
     private String apiKey;
+    @NotNull
     @Value("${dadata.secret.key}")
     private String secretKey;
     private final DataClient dataClient;
