@@ -32,7 +32,7 @@ public class DataServiceTest {
 
     @Test
     public void whenCorrectStringThenSuccess() {
-        val payLoad = "[ \"спб жуковского 63\" ]";
+        val payLoad = Collections.singletonList("[ \"спб жуковского 63\" ]");
         double expectedGeoLat = 59.9357374;
         double expectedGeoLon = 30.3632316;
         when(dataClient.sendMail(any(), any(), any()))
@@ -44,7 +44,7 @@ public class DataServiceTest {
 
     @Test
     public void whenEmptyStringThenDoNothing() {
-        val payLoad = "";
+        val payLoad = Collections.singletonList("");
         dataService.getAddress(payLoad).getBody();
         Mockito.verify(converter, times(0)).convert(any());
     }

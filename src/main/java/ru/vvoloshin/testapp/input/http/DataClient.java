@@ -19,5 +19,5 @@ public interface DataClient {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseEntity<List<DadataResponse>> sendMail(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String apiKey,
                                                   @RequestHeader(value = "X-Secret") String secretKey,
-                                                  @RequestBody String payLoad);
+                                                  @RequestBody List<String> payLoad);
 }

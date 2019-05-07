@@ -12,6 +12,7 @@ import ru.vvoloshin.testapp.input.http.DataClient;
 import ru.vvoloshin.testapp.misc.AddressConverterImpl;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -30,8 +31,8 @@ public class DataService {
         this.converter = converter;
     }
 
-    public ResponseEntity<Address> getAddress(String payload) {
-        if (!StringUtils.isEmpty(payload)) {
+    public ResponseEntity<Address> getAddress(List<String> payload) {
+        if (!payload.isEmpty()) {
             val response = dataClient.sendMail(apiKey, secretKey, payload);
             if (!response.getStatusCode().is2xxSuccessful()) {
                 log.error("error for receiving string: {}", payload);
