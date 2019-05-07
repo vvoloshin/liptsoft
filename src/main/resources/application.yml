@@ -1,0 +1,8 @@
+server:
+  port: 8081
+
+dadata.url.server: "https://dadata.ru/api/v2"
+dadata.url.post.address: "/clean/address"
+dadata.api.key: "Token fc1268a0cdf91c27d9ed5ac76b4b259c710586f7"
+dadata.secret.key: "a92f4be104cdbb556f5078447068e4f76279a50f"
+outer.url.post.address: "/clean/address"
