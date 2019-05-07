@@ -35,7 +35,7 @@ public class DataService {
         if (!payload.isEmpty()) {
             try {
                 val response = dataClient.sendMail(apiKey, secretKey, payload);
-                if (!response.getStatusCode().is2xxSuccessful()) {
+                if (response == null || !response.getStatusCode().is2xxSuccessful()) {
                     log.error("internal service error: {}", payload);
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
