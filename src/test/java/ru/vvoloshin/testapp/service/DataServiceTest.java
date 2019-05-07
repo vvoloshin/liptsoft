@@ -1,6 +1,7 @@
 package ru.vvoloshin.testapp.service;
 
 import lombok.val;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,8 +34,8 @@ public class DataServiceTest {
     @Test
     public void whenCorrectStringThenSuccess() {
         val payLoad = Collections.singletonList("[ \"спб жуковского 63\" ]");
-        double expectedGeoLat = 59.9357374;
-        double expectedGeoLon = 30.3632316;
+        val expectedGeoLat = 59.9357374;
+        val expectedGeoLon = 30.3632316;
         when(dataClient.sendMail(any(), any(), any()))
                 .thenReturn(new ResponseEntity<>(Collections.singletonList(new DadataResponse(expectedGeoLat, expectedGeoLon)), HttpStatus.OK));
         val actualAddress = dataService.getAddress(payLoad).getBody();
@@ -44,7 +45,7 @@ public class DataServiceTest {
 
     @Test
     public void whenEmptyStringThenDoNothing() {
-        val payLoad = Collections.singletonList("");
+        val payLoad = Collections.singletonList(StringUtils.EMPTY);
         dataService.getAddress(payLoad).getBody();
         Mockito.verify(converter, times(0)).convert(any());
     }
