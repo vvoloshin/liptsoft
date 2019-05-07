@@ -1,12 +1,12 @@
 package ru.vvoloshin.testapp.service;
 
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import ru.vvoloshin.testapp.dto.response.Address;
 import ru.vvoloshin.testapp.input.http.DataClient;
 import ru.vvoloshin.testapp.misc.AddressConverterImpl;
@@ -33,17 +33,22 @@ public class DataService {
 
     public ResponseEntity<Address> getAddress(List<String> payload) {
         if (!payload.isEmpty()) {
-            val response = dataClient.sendMail(apiKey, secretKey, payload);
-            if (!response.getStatusCode().is2xxSuccessful()) {
-                log.error("error for receiving string: {}", payload);
-                throw new RuntimeException("Service unavailable");
-            }
-            if (response.getBody() != null && !response.getBody().isEmpty()) {
-                val address = converter.convert(response.getBody().get(0));
-                return new ResponseEntity<>(address, HttpStatus.OK);
+            try {
+                val response = dataClient.sendMail(apiKey, secretKey, payload);
+                if (!response.getStatusCode().is2xxSuccessful()) {
+                    log.error("internal service error: {}", payload);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+                if (response.getBody() != null && !response.getBody().isEmpty()) {
+                    val address = converter.convert(response.getBody().get(0));
+                    return new ResponseEntity<>(address, HttpStatus.OK);
+                }
+            } catch (FeignException e) {
+                log.error("service unavailable");
+                return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
             }
         }
         log.debug("empty request");
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
