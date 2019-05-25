@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: Dadata-rest client
+  description: Test tesk for job-offer
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8081
+    description: localhost spring-boot server
+
+paths:
+  /clean/address:
+    post:
+      summary: Returns a lattitude and longitude of requested address
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: "спб жуковского 63"
+              description: Short info for recognizing address
+      responses:
+        200:
+          description: Recognized geo_lat and geo_lon
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        204:
+          description: Empty request
+        500:
+          description: Remote server unavialable
+        503:
+          description: Internal server error
+
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        geoLat:
+          type: number
+          format: float
+          example: 59.9357374
+        geoLon:
+          type: number
+          format: float
+          example: 30.3632316

@@ -1,5 +1,12 @@
 server:
   port: 8081
+logging:
+  level:
+    root: debug
+    org.springframework.web: debug
+spring:
+  http:
+    log-request-details: true
 
 dadata.url.server: "https://dadata.ru/api/v2"
 dadata.url.post.address: "/clean/address"

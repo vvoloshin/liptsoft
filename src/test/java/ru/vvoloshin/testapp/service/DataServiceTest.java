@@ -29,7 +29,7 @@ public class DataServiceTest {
     @Spy
     AddressConverterImpl converter;
     @InjectMocks
-    DataService dataService;
+    DataServiceRemote dataService;
 
     @Test
     public void whenCorrectStringThenSuccess() {
